@@ -1,0 +1,17 @@
+1. Понять, что номер дома находится в диапозоне 
+    - например пользователь ввел Зумен Кордунашка 13е, нужно понять что этот адресс находится в диапозоне Кордунашка 11-14ж
+2. Автоматический парсинг сайта с обьялениями об отключении (1 раз в 24 часа)
+3. Автоматическая отправка сообщений пользователям, у которых адресс добавлен в мониторинг
+-----
+
+1. Сайт в котором можно ввести почту, номер телефона и адрес 
+    - оповещение через почту
+    - оповещение через смс
+
+
+---- 
+I need to write periodic celery task that will 
+1. Find addresses added by all users in the ScheduledAddresses 
+2. Collect all addresses to the dict that contains user info  from the User table and dict with address and time_range
+3. Mark user field notified_at to the current time_range
+4. Notify user thorugh telegram bot (will emplement later) 

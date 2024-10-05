@@ -1,0 +1,6 @@
+ ~/fastapi/telegram
+
+redis-cli flushall
+redis-server --port 6380
+celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info
+celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info
