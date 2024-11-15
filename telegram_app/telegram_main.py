@@ -57,7 +57,7 @@ async def send_outage_notification(users_data: list):
     
     :param users_data: A list of dictionaries, each containing user info and their address outage details.
     """
-    TOKEN_LOC = '7524028999:AAGu1jGYt6pKxbLC5Z7ENdC_wqPyxw1Wz6A'
+    TOKEN_LOC = TOKEN
     if not TOKEN_LOC:
         raise ValueError("TOKEN environment variable is not set")
     bot = Bot(token=TOKEN_LOC)  # Initialize the bot once outside the loop
@@ -361,10 +361,6 @@ async def confirm_delete(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 def main() -> None:
     """Run the bot."""
     application = Application.builder().token(TOKEN).build()
-
-    # Start Celery
-    # print("Starting Celery...")
-    # celery_app.start(argv=['celery', 'worker', '--loglevel=info'])
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
