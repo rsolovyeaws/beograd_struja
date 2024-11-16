@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from telegram_app.sql.models import User, ScheduledAddress
 from datetime import datetime
 from telegram_app.sql.database import SessionLocal
-from telegram_app.telegram_main import send_outage_notification
+from telegram_app.bot_state_main import send_outage_notification
 import asyncio
 from telegram_app.parser.utils import is_within_range
 from telegram import Bot
