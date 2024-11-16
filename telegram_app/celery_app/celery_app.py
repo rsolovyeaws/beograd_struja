@@ -13,14 +13,14 @@ app.conf.update(
     beat_schedule={
         'scrape-beauty-every-hour': {
             'task': 'telegram_app.scraper_beauty.scrape_beauty',
-            'schedule': 60.0,  # Runs every hour
+            'schedule': 600.0,  # Runs every hour
             'options': {
                 'run_immediately': True
             },
         },
         'notify-users-after-scrape': {
             'task': 'telegram_app.notify_users',
-            'schedule': 120.0,  # Runs every hour + 1 minute
+            'schedule': 1200.0,  # Runs every hour + 1 minute
             'options': {
                 'run_immediately': False
             },
