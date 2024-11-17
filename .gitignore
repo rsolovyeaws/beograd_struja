@@ -2,3 +2,4 @@ telegram_app/.env
 telegram_app/tg_user_address.db
 *.pyc
 alembic.ini
+celerybeat-schedule
