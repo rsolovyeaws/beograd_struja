@@ -9,7 +9,6 @@ from telegram_app.sql.queries import get_user, get_user_addresses
 
 class ActionState(State):
     async def handle(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-        print("ACTION STATE")
         query = update.callback_query
         await query.answer()
 

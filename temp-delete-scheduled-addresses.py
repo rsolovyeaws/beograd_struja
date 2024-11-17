@@ -4,19 +4,13 @@ from telegram_app.parser.utils import parse_street_and_numbers, split_settlement
 from telegram_app.sql.models import ScheduledAddress
 from telegram_app.sql.database import SessionLocal
 from celery import shared_task
-from telegram_app.sql.queries import save_parsed_scheduled_addresses_to_db
-from typing import Final
-from dotenv import load_dotenv
-import os
-import json
-import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+# TODO: MOVE TO .env
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+}
+URL = 'https://elektrodistribucija.rs/planirana-iskljucenja-beograd/Dan_1_Iskljucenja.htm'
 
-load_dotenv(dotenv_path='telegram_app/.env')
-URL: Final = os.getenv("URL")
-HEADERS: Final = json.loads(os.getenv("HEADERS"))
 
 def fetch_webpage(url, headers):
     """Fetch the webpage content and return the response."""
@@ -78,6 +72,30 @@ def extract_data_from_table(table):
     
     return data
 
+def save_data_to_db(data):
+    """Save the extracted data to the database."""
+    with SessionLocal() as db:
+        # Clear all existing records in the ScheduledAddress table
+        db.query(ScheduledAddress).delete()
+        db.commit()
+        
+        for entry in data:
+            scheduled_address = ScheduledAddress(
+                municipality=entry['municipality'],
+                time_range=entry['time_range'],
+                settlement=entry['settlement'],
+                street=entry['street'],
+                house_range=entry['house_range']
+            )
+            db.add(scheduled_address)
+        db.commit()
+        
+def delete_scheduled_addresses():
+    """Delete all records from the ScheduledAddress table."""
+    with SessionLocal() as db:
+        db.query(ScheduledAddress).delete()
+        db.commit()
+
 @shared_task(name='telegram_app.scraper_beauty.scrape_beauty')
 def scrape_beauty():
     """Web scraping and database saving."""
@@ -86,10 +104,23 @@ def scrape_beauty():
         table = parse_webpage(content)
         data = extract_data_from_table(table)
     
-        save_parsed_scheduled_addresses_to_db(data)
+        save_data_to_db(data)
 
-        return "Scraping task completed"
+        return f"Scraping task completed\n{data}"
     except Exception as e:
         #TODO: Log the exception
         print(f"Error during scraping: {e}")
         return None 
+
+
+if __name__ == "__main__":
+    # try:
+    #     content = fetch_webpage(URL, HEADERS)
+    #     table = parse_webpage(content)
+    #     data = extract_data_from_table(table)
+    #     save_data_to_db(data)
+    #     print(f"Scraping task completed\n{data}")
+    # except Exception as e:
+    #     print(f"Error during scraping: {e}")
+    delete_scheduled_addresses()
+    pass

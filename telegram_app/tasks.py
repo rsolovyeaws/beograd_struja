@@ -7,17 +7,13 @@ from sqlalchemy.orm import Session
 from telegram_app.sql.models import User, ScheduledAddress
 from datetime import datetime
 from telegram_app.sql.database import SessionLocal
-from telegram_app.bot_state_main import send_outage_notification
+from telegram_app.bot.utils import send_outage_notification
 import asyncio
 from telegram_app.parser.utils import is_within_range
 from telegram import Bot
 from telegram_app.parser.utils import remove_duplicate_addresses
-
-# Import the Celery app instance
-# from telegram_app.celery_app import app
-
-
 import logging
+
 logger = logging.getLogger(__name__)
 
 load_dotenv(dotenv_path='telegram_app/.env')
@@ -26,8 +22,7 @@ TOKEN: Final = os.getenv("TOKEN")
 BOT_USERNAME: Final = os.getenv("BOT_USERNAME")
 
 
-@shared_task(name='telegram_app.scraper_beauty.scrape_beauty', acks_late=True)
-# @app(name='telegram_app.scraper_beauty.scrape_beauty', acks_late=True)
+@shared_task(name='telegram_app.scraper_beauty.run_scrape_beauty', acks_late=True)
 def run_scrape_beauty():
     logger.info("Starting scrape_beauty task")
     result = perform_scrape_beauty()
@@ -36,7 +31,6 @@ def run_scrape_beauty():
     else:
         logger.warning("Scraping failed")
     return result
-    # return perform_scrape_beauty()
     
     
 #TODO: TESTING
@@ -66,8 +60,6 @@ def notify_users():
         users = db.query(User).filter(User.is_active == True).all()
         # Fetch all scheduled addresses
         scheduled_addresses_all = db.query(ScheduledAddress).all()
-        # print(users)
-        # print(scheduled_addresses_all)
         for user in users:
             matching_scheduled_addresses = []
             
@@ -103,10 +95,8 @@ def notify_users():
                     "addresses": address_data,
                 }
                 user_data = remove_duplicate_addresses(user_data)
-                # TODO: changed to True for testign purposes
-                # if not user.notified_at or (datetime.now() - user.notified_at).days >= 1:
-                if True:
-                    # Update user's notification timestamp
+                
+                if not user.notified_at or (datetime.now() - user.notified_at).days >= 1:
                     user.notified_at = datetime.now()
                     db.add(user)
                     db.commit()
