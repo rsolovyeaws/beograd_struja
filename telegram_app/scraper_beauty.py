@@ -85,7 +85,7 @@ def scrape_beauty():
         content = fetch_webpage(URL, HEADERS)
         table = parse_webpage(content)
         data = extract_data_from_table(table)
-    
+        print((f"Extracted {len(data)} records from the webpage."))
         save_parsed_scheduled_addresses_to_db(data)
 
         return "Scraping task completed"

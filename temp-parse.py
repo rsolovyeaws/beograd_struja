@@ -115,4 +115,13 @@ def scrape_beauty():
 
 
 if __name__ == "__main__":
-    delete_scheduled_addresses()
+    try:
+        content = fetch_webpage(URL, HEADERS)
+        table = parse_webpage(content)
+        data = extract_data_from_table(table)
+        save_parsed_scheduled_addresses_to_db(data)
+        print(f"Scraping task completed\n{data}")
+    except Exception as e:
+        print(f"Error during scraping: {e}")
+    # delete_scheduled_addresses()
+    pass
