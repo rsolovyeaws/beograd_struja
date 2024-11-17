@@ -52,3 +52,27 @@ def get_user_addresses(user_id: int) -> list:
     with SessionLocal() as db:
         addresses = db.query(Address).filter(Address.user_id == user_id).all()
         return addresses
+    
+def save_parsed_scheduled_addresses_to_db(data):
+    """Save the extracted data to the database."""
+    with SessionLocal() as db:
+        # Clear all existing records in the ScheduledAddress table
+        db.query(ScheduledAddress).delete()
+        db.commit()
+        
+        for entry in data:
+            scheduled_address = ScheduledAddress(
+                municipality=entry['municipality'],
+                time_range=entry['time_range'],
+                settlement=entry['settlement'],
+                street=entry['street'],
+                house_range=entry['house_range']
+            )
+            db.add(scheduled_address)
+        db.commit()
+        
+def delete_scheduled_addresses():
+    """Delete all records from the ScheduledAddress table."""
+    with SessionLocal() as db:
+        db.query(ScheduledAddress).delete()
+        db.commit()

@@ -7,7 +7,6 @@ from telegram_app.bot.utils import get_action_keyboard, LANGUAGE, ACTION
 
 class LanguageState(State):
     async def handle(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-        print("LANGUAGE STATE")
         user_language = update.message.text
         context.user_data['language'] = user_language
         
