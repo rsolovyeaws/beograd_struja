@@ -1,6 +1,15 @@
 # Project goal
 The goal of this project is to create notification system for planned power outages in Belgrade. The system will scrape the data from the website of the power distribution company and send the notifications to the users.
 
+# Example:
+## Data on the ... web site
+![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
+## User signups for the address to be monitored:
+
+## User gets notified
+
+
+
 # Current state of the project
 1. Telegram bot can notify users, that provided their addresses to the telegram bot, if there is a planned power outage in their area within 24 hours
 2. Users can provide their address to the bot via interactions with the bot 
