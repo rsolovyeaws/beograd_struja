@@ -8,15 +8,14 @@ The goal of this project is to create notification system for planned power outa
 
 
 # Sample scenario:
-## User chooses the language for interaction with bot: ![image](https://github.com/user-attachments/assets/091c8d6a-1a08-43fe-bbd1-7514d7982e6e)
- 
-## User signups for the address to be monitored:
-![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
-
-## Data on the ... web site
+0. Backend scrapes  data from the web site
 ![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
-
-## User gets notified (address is provided for demonstration purpose)
+1. User chooses the language for interaction with bot: ![image](https://github.com/user-attachments/assets/091c8d6a-1a08-43fe-bbd1-7514d7982e6e) 
+2. User signups for the address to be monitored:
+![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
+3. Backend saves users address to the database
+4. Backend matches users address with address planned for power outage in datavase 
+4. User gets notified (address is provided for demonstration purpose)
 ![image](https://github.com/user-attachments/assets/46aea1f5-2128-4460-9bed-39a77b929461)
 
 
