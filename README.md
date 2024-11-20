@@ -5,6 +5,7 @@ The goal of this project is to create notification system for planned power outa
 ## Data on the ... web site
 ![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
 ## User signups for the address to be monitored:
+![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
 
 ## User gets notified
 
