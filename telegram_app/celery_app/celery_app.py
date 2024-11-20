@@ -3,7 +3,7 @@ from celery import Celery
 
 app = Celery(
     'telegram',
-    broker='redis://localhost:6379/0'
+    broker='redis://redis:6379/0'
 )
 
 app.autodiscover_tasks(['telegram_app'])
