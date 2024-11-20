@@ -1,9 +1,8 @@
 # WIP 
-
-poetry install
-poetry shell
-docker-compose up -d
+```
 set -a; source telegram_app/.env; set +a
+docker compose up --build -d
+```
 
 ## .env
 ```
@@ -16,6 +15,5 @@ POSTGRES_USER=""
 POSTGRES_PASSWORD=""
 POSTGRES_DB=""
 POSTGRES_HOST=""
-POSTGRES_PORT="
-"
+POSTGRES_PORT=""
 ```
