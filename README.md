@@ -8,6 +8,8 @@ The goal of this project is to create notification system for planned power outa
 
 
 # Sample scenario:
+## User chooses the language for interaction with bot: ![image](https://github.com/user-attachments/assets/091c8d6a-1a08-43fe-bbd1-7514d7982e6e)
+ 
 ## User signups for the address to be monitored:
 ![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
 
