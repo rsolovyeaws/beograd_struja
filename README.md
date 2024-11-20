@@ -1,13 +1,15 @@
 # Project goal
 The goal of this project is to create notification system for planned power outages in Belgrade. The system will scrape the data from the website of the power distribution company and send the notifications to the users.
 
-# Example:
-## Data on the ... web site
-![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
+# Sample scenario:
 ## User signups for the address to be monitored:
 ![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
 
-## User gets notified
+## Data on the ... web site
+![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
+
+## User gets notified (address is provided for demonstration purpose)
+![image](https://github.com/user-attachments/assets/46aea1f5-2128-4460-9bed-39a77b929461)
 
 
 
