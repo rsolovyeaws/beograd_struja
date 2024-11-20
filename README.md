@@ -17,7 +17,7 @@ The goal of this project is to create notification system for planned power outa
 ### 3. User signups for the address to be monitored
 ![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
 ### 4. Backend saves users address to the database
-### 5. Backend matches users address with address planned for power outage in datavase 
+### 5. Backend matches user's address with the address planned for the power outage in database 
 ### 6. User gets notified (address is provided for demonstration purpose)
 ![image](https://github.com/user-attachments/assets/46aea1f5-2128-4460-9bed-39a77b929461)
 
