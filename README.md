@@ -18,7 +18,7 @@ The goal of this project is to create notification system for planned power outa
 2. Users can provide their address to the bot via interactions with the bot 
 3. Backend is scraping the data from the website of the power distribution company, stores data in the database and sends notifications to the users
 4. Every day the bot scrapes the data from the power distribution company website and sends notifications to the users if there are any planned power outages in their address.
-5. Via interaction with the bot, users can ask the bot fot the list of addresses that they currently monitor
+5. Via interaction with the bot, users can ask the bot for the list of addresses that they currently monitor
 6. Users can remove the address from the list of addresses that they monitor via interaction with the bot
 
 # Future plans for the project
