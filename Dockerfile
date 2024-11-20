@@ -27,6 +27,17 @@ COPY . /app
 # EXPOSE 8000  # Example: FastAPI default port, adjust as needed
 
 # Set default command
-CMD ["sh", "-c", "python3 bot_state_main.py & \
+# CMD ["sh", "-c", "python3 bot_state_main.py & \
+#     celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
+#     celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info"]
+CMD ["sh", "-c", "while ! nc -z $POSTGRES_HOST $POSTGRES_PORT; do \
+        echo 'Waiting for database...'; \
+        sleep 1; \
+    done; \
+    echo 'Database is ready!'; \
+    alembic stamp head; \
+    alembic revision --autogenerate -m 'Initial migration'; \
+    alembic upgrade head; \
+    python3 bot_state_main.py & \
     celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
     celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info"]
