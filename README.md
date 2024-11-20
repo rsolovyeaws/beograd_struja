@@ -32,16 +32,17 @@ The goal of this project is to create notification system for planned power outa
 6. Users can remove the address from the list of addresses that they monitor via interaction with the bot
 
 # Future plans for the project
-1. Add address verifictaion for user's input (e.g. user enters "Zimun" -> System asks: "Did you mean 'Zemun' etc."
-3. Notify users about the planned power outages in their area 48 hours before the power outage
-4. Provide users with statistics that shows how many times the power outage happened in their area
-5. Add multiple notification systems for the users (email, sms, whatsapp)
-6. Add the possibility for the users to choose the notification system that they want to use
-7. Add web interface for the users to interact with the bot
-8. Expand notification system to other cities in Serbia
+## High priority
+- Add address verifictaion for user's input (e.g. user enters "Zimun" -> System asks: "Did you mean 'Zemun' etc."
+- Notify users about planned power outages in their area 0/24/48/72/96 hours before the power outage
+- Expand notification system to other cities in Serbia (might be impossible... sinse Kikinda has nothing to parse)
 
-# Installation for development
+## Moderate Priority
+- Provide users with statistics that shows how many times the power outage happened in their area/address/overall (need to modify db to store history)
+- Multiple notification systems for the users (other messengers, may be sms.., pigeons =P, viber )
+- Add web interface for users that will allow users to choose the way of communication. 
 
+# Installation instructions for development
 ## After cloning the repository
 After cloning the repository, create .env file in the telegram_app folder of the project and fill it with the necessary data. The .env file should look like this:
 ```
