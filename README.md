@@ -8,7 +8,7 @@ The goal of this project is to create notification system for planned power outa
 
 
 # Sample scenario:
-### 0. Backend scrapes data from the web site (next day power outage) (https://elektrodistribucija.rs/planirana-iskljucenja-beograd/Dan_0_Iskljucenja.htm)
+### 0. Backend scrapes data from the web site (next day power outage) (https://elektrodistribucija.rs/planirana-iskljucenja-beograd/Dan_1_Iskljucenja.htm)
 ![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
 ### 1. User chooses the language for interaction with bot
 ![image](https://github.com/user-attachments/assets/091c8d6a-1a08-43fe-bbd1-7514d7982e6e) 
