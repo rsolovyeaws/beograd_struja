@@ -30,12 +30,13 @@ The goal of this project is to create notification system for planned power outa
 6. Users can remove the address from the list of addresses that they monitor via interaction with the bot
 
 # Future plans for the project
-1. Expand notification system to other cities in Serbia
-2. Notify users about the planned power outages in their area 48 hours before the power outage
-3. Provide users with statistics that shows how many times the power outage happened in their area
-4. Add multiple notification systems for the users (email, sms, whatsapp)
-5. Add the possibility for the users to choose the notification system that they want to use
-6. Add web interface for the users to interact with the bot
+1. Add address verifictaion for user's input (e.g. user enters "Zimun" -> System asks: "Did you mean 'Zemun' etc."
+3. Notify users about the planned power outages in their area 48 hours before the power outage
+4. Provide users with statistics that shows how many times the power outage happened in their area
+5. Add multiple notification systems for the users (email, sms, whatsapp)
+6. Add the possibility for the users to choose the notification system that they want to use
+7. Add web interface for the users to interact with the bot
+8. Expand notification system to other cities in Serbia
 
 # Installation for development
 
