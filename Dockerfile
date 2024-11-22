@@ -30,7 +30,8 @@ COPY . /app
 # CMD alembic stamp head; \
 #     alembic revision --autogenerate -m 'Initial migration'; \
 #     alembic upgrade head; \
-CMD alembic upgrade head && \
+CMD sh -c "alembic upgrade head && \
     python3 bot_state_main.py & \
     celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
-    celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info
+    celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info && \
+    wait"
