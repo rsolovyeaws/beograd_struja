@@ -1,11 +1,13 @@
 from telegram.ext import ContextTypes
 from telegram import Update
 from telegram_app.bot.lang import PHRASES
-from telegram_app.bot.utils import AREA, LIST, DELETE, ACTION, send_message, get_action_keyboard
+from telegram_app.bot.utils import AREA, LIST, DELETE, ACTION, get_address_keyboard, send_message, get_action_keyboard
 from telegram_app.bot.states.state import State
 from telegram_app.sql.models import User, Address
 from telegram_app.sql.queries import get_user, get_user_addresses
+import logging
 
+logger = logging.getLogger(__name__)
 
 class ActionState(State):
     async def handle(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -54,9 +56,24 @@ class ActionState(State):
                 await send_message(update, "No addresses found for this user.")
                 return ACTION
 
+            # context.user_data['addresses'] = addresses
+            # address_list = "\n".join([f"{i+1}. {addr.full_address}" for i, addr in enumerate(addresses)])
+            # response_message = f"{phrases['subscribed']}\n{address_list}\n\n{phrases['enter_number_delete']}"
+            # await send_message(update, response_message)
+            
+            # Save the addresses in the user's context (TODO: not sure why we need this)
             context.user_data['addresses'] = addresses
-            address_list = "\n".join([f"{i+1}. {addr.full_address}" for i, addr in enumerate(addresses)])
-            response_message = f"{phrases['subscribed']}\n{address_list}\n\n{phrases['enter_number_delete']}"
-            await send_message(update, response_message)
+            
+            # Generate an interactive keyboard with the addresses
+            keyboard = get_address_keyboard(addresses, user_language)
+            
+            logger.info(f"User {user.telegram_id} is deleting an address.")
+            for i, addr in enumerate(addresses):
+                logger.info(f"Address {i+1}: {addr.id} - {addr.full_address}")
+
+            await query.message.reply_text(
+                phrases['subscribed'],
+                reply_markup=keyboard
+            )
             
             return DELETE

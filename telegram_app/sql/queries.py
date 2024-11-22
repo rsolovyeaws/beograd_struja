@@ -79,6 +79,13 @@ def get_user_addresses(user_id: int) -> list:
         addresses = db.query(Address).filter(Address.user_id == user_id).all()
         return addresses
     
+def delete_user_address(user_id: int, address_id: int):
+    with SessionLocal() as db:
+        address = db.query(Address).filter(Address.id == address_id).first()
+        db.delete(address)
+        db.commit()
+        return address
+    
 def save_parsed_scheduled_addresses_to_db(data):
     """Save the extracted data to the database."""
     with SessionLocal() as db:
