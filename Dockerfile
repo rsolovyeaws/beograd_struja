@@ -25,7 +25,7 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 COPY . /app
 
 # Command to wait for PostgreSQL, run migrations, and start the app
-CMD ["sh", "-c", "
+CMD sh -c "
   echo 'Waiting for PostgreSQL to start...';
   while ! nc -z postgres 5432; do sleep 1; done;
   echo 'PostgreSQL is up!';
@@ -37,4 +37,4 @@ CMD ["sh", "-c", "
   celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info &
   celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info &
   wait
-"]
+"

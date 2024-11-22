@@ -1,3 +1,5 @@
+version: "3.9"  # Specify Docker Compose version
+
 services:
   postgres:
     image: postgres:15
@@ -10,7 +12,12 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5  # Ensure the service is ready before starting dependencies
+
   redis:
     image: redis:7
     container_name: redis_cache
@@ -19,7 +26,12 @@ services:
     command: ["redis-server", "--appendonly", "yes"]  # Enable AOF persistence
     volumes:
       - redis_data:/data
-  
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   beograd_struja_app:
     build:
       context: .
@@ -27,13 +39,17 @@ services:
     environment:
       - POETRY_VIRTUALENVS_CREATE=false
     env_file:
-      - ./telegram_app/.env
+      - ./telegram_app/.env  # Use environment variables from .env file
     volumes:
-      - .:/app
+      - .:/app  # Mount local directory for development
     working_dir: /app
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy  # Ensure postgres is healthy before starting
+      redis:
+        condition: service_healthy  # Ensure redis is healthy before starting
+    ports:
+      - "8000:8000"  # Expose the application port
 
 volumes:
   postgres_data:
