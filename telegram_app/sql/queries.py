@@ -32,6 +32,32 @@ def save_user_address(user_data: User, area: str, street: str, house: str):
             db.add(address)
             db.commit()
 
+def create_user(user_data: User):
+    with SessionLocal() as db:
+        user = User(
+            telegram_id=user_data.id,
+            first_name=user_data.first_name,
+            last_name=user_data.last_name,
+            username=user_data.username,
+            is_bot=user_data.is_bot,
+            language_code=user_data.language_code,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
+    
+
+def get_user(telegram_id: int) -> User:
+    with SessionLocal() as db:
+        user = db.query(User).filter(User.telegram_id == telegram_id).first()
+        return user
+
+def update_user_language(user_id: int, language: str):
+    with SessionLocal() as db:
+        user = db.query(User).filter(User.telegram_id == user_id).first()
+        user.bot_language = language
+        db.commit()
 
 def is_address_scheduled_for_tomorrow(area: str, street: str, house: str) -> bool:
     with SessionLocal() as db:
