@@ -16,11 +16,22 @@ from telegram_app.bot.states.confirm_delete_state import ConfirmDeleteState
 from telegram_app.bot.states.cancel_state import CancelState
 from telegram_app.bot.utils import (
     TOKEN, BOT_USERNAME,
-    LANGUAGE, ACTION, AREA, STREET, HOUSE, SUMMARY, DELETE, SHOW, LIST,
+    LANGUAGE, ACTION, AREA, STREET, HOUSE, SUMMARY, DELETE, SHOW, LIST, get_language_keyboard,
     validate_area, validate_street, validate_house,
     send_message, get_action_keyboard
 )
+from telegram_app.sql.queries import get_user, create_user
 from telegram_app.bot.lang import PHRASES
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+# Reduce verbosity for external libraries
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("telegram").setLevel(logging.WARNING)
 
 
 async def send_outage_notification(users_data: list):
@@ -52,13 +63,36 @@ async def send_outage_notification(users_data: list):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Starts the conversation and asks the user to choose a language."""
-    reply_keyboard = [['Serbian', 'English', 'Russian']]
-    await send_message(
-        update,
-        PHRASES["English"]["welcome"],
-        ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
-    )
-    return LANGUAGE  
+    bot_user = update.effective_user
+    
+    logger.info(f"User {bot_user.id} started the conversation.")
+    
+    user = get_user(bot_user.id)
+    
+    if not user:
+        user = create_user(bot_user)
+        logger.info(f"User created: {user}")
+
+    bot_language = user.bot_language
+    if not bot_language:
+        # ask user to choose a language 
+        await send_message(
+            update,
+            PHRASES["English"]["welcome"],
+            get_language_keyboard()
+        )
+        
+        return LANGUAGE
+    else:
+        # ask user to choose an action
+        context.user_data['language'] = bot_language
+        await send_message(
+            update,
+            PHRASES[bot_language]["choose_action"],
+            get_action_keyboard(bot_language)
+        )
+        
+        return ACTION 
 
 
 def main() -> None:
@@ -68,7 +102,7 @@ def main() -> None:
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={
-            LANGUAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, LanguageState().handle)],
+            LANGUAGE: [CallbackQueryHandler(LanguageState().handle)],
             ACTION: [CallbackQueryHandler(ActionState().handle)],
             AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, AreaState().handle)],
             STREET: [MessageHandler(filters.TEXT & ~filters.COMMAND, StreetState().handle)],
@@ -84,8 +118,6 @@ def main() -> None:
     )
 
     application.add_handler(conv_handler)
-    application.add_handler(CommandHandler('start', LanguageState().handle))
-
     application.run_polling()
 
 if __name__ == '__main__':

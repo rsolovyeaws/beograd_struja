@@ -58,6 +58,15 @@ def get_action_keyboard(user_language: str) -> InlineKeyboardMarkup:
     ]
     return InlineKeyboardMarkup(keyboard)
 
+def get_language_keyboard() -> InlineKeyboardMarkup:
+    """Generate language keyboard"""
+    keyboard = [
+        [InlineKeyboardButton("Serbian", callback_data='Serbian')],
+        [InlineKeyboardButton("English", callback_data='English')],
+        [InlineKeyboardButton("Russian", callback_data='Russian')],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
 async def send_outage_notification(users_data: list):
     """Sends power outage notifications to multiple users via Telegram."""
     if not TOKEN:

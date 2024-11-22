@@ -17,6 +17,7 @@ class User(Base):
     language_code = Column(String(4), nullable=False)
     notified_at = Column(DateTime, default=None)
     is_active = Column(Boolean, default=True)
+    bot_language = Column(String(100), default="")
     
     addresses = relationship("Address", back_populates="user")
 
