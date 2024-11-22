@@ -5,6 +5,7 @@ FROM python:3.10-slim
 RUN apt-get update && apt-get install -y \
     curl \
     git \
+    netcat \
     && apt-get clean
 
 # Install Poetry
@@ -23,15 +24,12 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 # Copy the rest of the application code
 COPY . /app
 
+# Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Expose necessary ports (if applicable)
 # EXPOSE 8000  # Example: FastAPI default port, adjust as needed
 
-# Set default command to run Alembic migrations followed by the application
-# CMD alembic stamp head; \
-#     alembic revision --autogenerate -m 'Initial migration'; \
-#     alembic upgrade head; \
-CMD sh -c "alembic upgrade head && \
-    python3 bot_state_main.py & \
-    celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
-    celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info && \
-    wait"
+# Set entrypoint
+ENTRYPOINT ["/app/entrypoint.sh"]
