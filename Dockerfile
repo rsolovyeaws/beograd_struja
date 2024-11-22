@@ -26,14 +26,11 @@ COPY . /app
 # Expose necessary ports (if applicable)
 # EXPOSE 8000  # Example: FastAPI default port, adjust as needed
 
-# Set default command
-# CMD ["sh", "-c", "python3 bot_state_main.py & \
-#     celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
-#     celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info"]
 # Set default command to run Alembic migrations followed by the application
-CMD alembic stamp head; \
-    alembic revision --autogenerate -m 'Initial migration'; \
-    alembic upgrade head; \
+# CMD alembic stamp head; \
+#     alembic revision --autogenerate -m 'Initial migration'; \
+#     alembic upgrade head; \
+CMD alembic upgrade head && \
     python3 bot_state_main.py & \
     celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
     celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info
