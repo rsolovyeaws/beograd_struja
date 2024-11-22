@@ -26,10 +26,6 @@ COPY . /app
 
 # Wait for PostgreSQL and set up the database
 RUN /bin/sh -c '\
-  while ! nc -z postgres 5432; do \
-    echo "Waiting for PostgreSQL..."; \
-    sleep 1; \
-  done && \
   alembic stamp head && \
   alembic revision --autogenerate -m "Initial migration" && \
   alembic upgrade head'
