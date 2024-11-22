@@ -39,4 +39,4 @@ CMD /bin/sh -c '\
   python3 bot_state_main.py & \
   celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
   celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info & \
-  wait'
+  '
