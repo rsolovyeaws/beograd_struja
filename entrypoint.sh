@@ -7,6 +7,8 @@ while ! nc -z postgres 5432; do
 done
 
 # Apply migrations
+alembic stamp head
+alembic revision --autogenerate -m "Initial migration"
 alembic upgrade head
 
 # Start the main application and Celery processes
