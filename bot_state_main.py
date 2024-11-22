@@ -109,7 +109,7 @@ def main() -> None:
             HOUSE: [MessageHandler(filters.TEXT & ~filters.COMMAND, HouseState().handle)],
             # SUMMARY: [MessageHandler(filters.TEXT & ~filters.COMMAND, SummaryState().handle)],
             LIST: [MessageHandler(filters.TEXT & ~filters.COMMAND, ListAddressesState().handle)],
-            DELETE: [MessageHandler(filters.TEXT & ~filters.COMMAND, ConfirmDeleteState().handle)],
+            DELETE: [CallbackQueryHandler(ConfirmDeleteState().handle)],
         },
         fallbacks=[
             CommandHandler('start', LanguageState().handle),

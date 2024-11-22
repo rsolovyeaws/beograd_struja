@@ -67,6 +67,16 @@ def get_language_keyboard() -> InlineKeyboardMarkup:
     ]
     return InlineKeyboardMarkup(keyboard)
 
+def get_address_keyboard(addresses: list, user_language: str) -> InlineKeyboardMarkup:
+    """Generate address keyboard based on the user's language."""
+    keyboard = []
+    
+    for i, addr in enumerate(addresses):
+        keyboard.append([InlineKeyboardButton(f"{i+1}. {addr.full_address}", callback_data=f"{addr.id}")])
+    keyboard.append([InlineKeyboardButton(PHRASES[user_language]['cancel'], callback_data='Cancel')])
+
+    return InlineKeyboardMarkup(keyboard)
+
 async def send_outage_notification(users_data: list):
     """Sends power outage notifications to multiple users via Telegram."""
     if not TOKEN:

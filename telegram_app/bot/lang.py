@@ -17,6 +17,7 @@ PHRASES = {
         'address': 'Адреса',
         'was_deleted': 'је обрисана.',
         'address_scheduled_tomorrow': 'На овој адреси сутра ће бити искључена струја.',
+        'cancel': 'Откажи',
     },
     'English': {
         'welcome': 'Welcome to the Beograd Electricity Bot!\nChoose your language\n',
@@ -36,6 +37,7 @@ PHRASES = {
         'address': 'Address',
         'was_deleted': 'was deleted.',
         'address_scheduled_tomorrow': 'There will be a power outage at this address tomorrow.',
+        'cancel': 'Cancel',
     },
     'Russian': {
         'welcome': 'Добро пожаловать в бота для электроэнергии Белграда!\nВыберите ваш язык\n',
@@ -55,6 +57,7 @@ PHRASES = {
         'address': 'Адрес',
         'was_deleted': 'был удален.',
         'address_scheduled_tomorrow': 'Завтра на этом адресе будет отключение электроэнергии.',
+        'cancel': 'Отмена',
     }
 }
 
