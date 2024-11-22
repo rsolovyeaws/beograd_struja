@@ -24,15 +24,17 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 # Copy the rest of the application code
 COPY . /app
 
-# Wait for PostgreSQL and set up the database
-RUN /bin/sh -c '\
-  alembic stamp head && \
-  alembic revision --autogenerate -m "Initial migration" && \
-  alembic upgrade head'
-
-# Start the main application and Celery processes
-CMD /bin/sh -c '\
+# Command to wait for PostgreSQL, run migrations, and start the app
+CMD sh -c ' \
+  echo "Waiting for PostgreSQL to start..."; \
+  while ! nc -z postgres 5432; do sleep 1; done; \
+  echo "PostgreSQL is up!"; \
+  echo "Running Alembic migrations..."; \
+  alembic stamp head; \
+  alembic revision --autogenerate -m "Initial migration"; \
+  alembic upgrade head; \
+  echo "Starting the application..."; \
   python3 bot_state_main.py & \
   celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info & \
   celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info & \
-  '
+  wait'

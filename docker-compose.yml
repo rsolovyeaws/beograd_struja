@@ -21,8 +21,6 @@ services:
       - redis_data:/data
   
   beograd_struja_app:
-    image: python:3.10-slim
-    container_name: beograd_struja_app
     build:
       context: .
       dockerfile: Dockerfile  # Custom Dockerfile to manage dependencies
@@ -33,10 +31,6 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    # command: >
-    #   sh -c "python3 bot_state_main.py &
-    #   celery -A telegram_app.celery_app.celery_app.app worker --loglevel=info &
-    #   celery -A telegram_app.celery_app.celery_app.app beat --loglevel=info"
     depends_on:
       - postgres
       - redis
