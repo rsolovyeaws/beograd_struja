@@ -30,7 +30,14 @@ class ActionState(State):
             addresses = get_user_addresses(user.id)
 
             if not addresses:
-                await send_message(update, "No addresses found for this user.")
+                await send_message(update, phrases['no_addresses'])
+                
+                # return to the action state
+                await query.message.reply_text(
+                    phrases["choose_action"],
+                    reply_markup=get_action_keyboard(user_language)
+                )
+            
                 return ACTION
 
             address_list = "\n".join([f"{addr.full_address}" for addr in addresses])
@@ -53,14 +60,15 @@ class ActionState(State):
             addresses = get_user_addresses(user.id)
 
             if not addresses:
-                await send_message(update, "No addresses found for this user.")
+                await send_message(update, phrases['no_addresses'])
+                
+                # return to the action state
+                await query.message.reply_text(
+                    phrases["choose_action"],
+                    reply_markup=get_action_keyboard(user_language)
+                )
                 return ACTION
 
-            # context.user_data['addresses'] = addresses
-            # address_list = "\n".join([f"{i+1}. {addr.full_address}" for i, addr in enumerate(addresses)])
-            # response_message = f"{phrases['subscribed']}\n{address_list}\n\n{phrases['enter_number_delete']}"
-            # await send_message(update, response_message)
-            
             # Save the addresses in the user's context (TODO: not sure why we need this)
             context.user_data['addresses'] = addresses
             

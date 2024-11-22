@@ -18,6 +18,7 @@ PHRASES = {
         'was_deleted': 'је обрисана.',
         'address_scheduled_tomorrow': 'На овој адреси сутра ће бити искључена струја.',
         'cancel': 'Откажи',
+        'no_addresses': 'Није пронађена ниједна адреса за овог корисника.',
     },
     'English': {
         'welcome': 'Welcome to the Beograd Electricity Bot!\nChoose your language\n',
@@ -38,6 +39,7 @@ PHRASES = {
         'was_deleted': 'was deleted.',
         'address_scheduled_tomorrow': 'There will be a power outage at this address tomorrow.',
         'cancel': 'Cancel',
+        'no_addresses': 'No addresses found for this user.',
     },
     'Russian': {
         'welcome': 'Добро пожаловать в бота для электроэнергии Белграда!\nВыберите ваш язык\n',
@@ -58,6 +60,7 @@ PHRASES = {
         'was_deleted': 'был удален.',
         'address_scheduled_tomorrow': 'Завтра на этом адресе будет отключение электроэнергии.',
         'cancel': 'Отмена',
+        'no_addresses': 'Адреса не найдены для этого пользователя.',
     }
 }
 
