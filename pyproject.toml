@@ -2,7 +2,7 @@
 name = "telegram"
 version = "0.1.0"
 description = ""
-authors = ["Robert Solovev <robert.solovev.dev@gmail.com>"]
+authors = ["Robert Solovev <rsolovye@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -24,3 +24,9 @@ psycopg2-binary = "^2.9.10"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+[tool.ruff]
+line-length = 120
