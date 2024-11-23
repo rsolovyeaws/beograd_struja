@@ -1,14 +1,18 @@
-from pydantic import BaseModel, Field
-from datetime import datetime
-from typing import Optional
+"""Module containing Pydantic models for the Telegram application."""
+
+from __future__ import annotations
+
+from datetime import datetime  # noqa: TC003
+
+from pydantic import BaseModel
 
 
-class AddressBase(BaseModel):
+class AddressBase(BaseModel):  # noqa: D101
     id: int
     full_address: str
 
 
-class AddressCreate(BaseModel):
+class AddressCreate(BaseModel):  # noqa: D101
     street: str
     area: str
     full_address: str
@@ -16,25 +20,26 @@ class AddressCreate(BaseModel):
     confirmed_geolocation: bool
 
 
-class Address(AddressBase):
+class Address(AddressBase):  # noqa: D101
     area: str
     street: str
     house_number: str
     confirmed_geolocation: bool
     created_at: datetime
     updated_at: datetime
-    
-    class Config:
+
+    class Config:  # noqa: D106
         from_attributes = True
 
 
-class UserBase(BaseModel):
+class UserBase(BaseModel):  # noqa: D101
     id: int
-    
-    class Config:
+
+    class Config:  # noqa: D106
         orm_mode = True
 
-class UserCreate(BaseModel):
+
+class UserCreate(BaseModel):  # noqa: D101
     telegram_id: int
     first_name: str
     last_name: str
@@ -44,7 +49,7 @@ class UserCreate(BaseModel):
     is_active: bool
 
 
-class User(UserBase):
+class User(UserBase):  # noqa: D101
     telegram_id: int
     first_name: str
     last_name: str
@@ -53,25 +58,26 @@ class User(UserBase):
     language_code: str
     is_active: bool
     addresses: list[Address] = []
-    
-    class Config:
-        from_attributes = True
-        
 
-class ScheduledAddressBase(BaseModel):
+    class Config:  # noqa: D106
+        from_attributes = True
+
+
+class ScheduledAddressBase(BaseModel):  # noqa: D101
     id: int
     municipality: str
     street: str
     house_range: str
     time_range: str
-    settlement: Optional[str] = None 
-    
-    class Config:
+    settlement: str | None = None
+
+    class Config:  # noqa: D106
         from_attributes = True
 
-class ScheduledAddressCreate(BaseModel):
+
+class ScheduledAddressCreate(BaseModel):  # noqa: D101
     municipality: str
     street: str
     house_range: str
     time_range: str
-    settlement: Optional[str] = None 
+    settlement: str | None = None

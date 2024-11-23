@@ -1,11 +1,14 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+"""Module contains SQLAlchemy ORM models for the Telegram application."""
+
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
-class User(Base):
+
+class User(Base):  # noqa: D101
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
@@ -18,10 +21,11 @@ class User(Base):
     notified_at = Column(DateTime, default=None)
     is_active = Column(Boolean, default=True)
     bot_language = Column(String(100), default="")
-    
+
     addresses = relationship("Address", back_populates="user")
 
-class Address(Base):
+
+class Address(Base):  # noqa: D101
     __tablename__ = "addresses"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -33,12 +37,13 @@ class Address(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     user_id = Column(Integer, ForeignKey("users.id"))
-    
+
     user = relationship("User", back_populates="addresses")
-    
-class ScheduledAddress(Base):
+
+
+class ScheduledAddress(Base):  # noqa: D101
     __tablename__ = "scheduled_addresses"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     municipality = Column(String(100), nullable=False)
     street = Column(String(100), nullable=False)
