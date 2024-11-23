@@ -15,6 +15,7 @@ from telegram.ext import (
     filters,
 )
 
+from telegram_app.bot.logging_config import setup_logger
 from telegram_app.bot.states.action_state import ActionState
 from telegram_app.bot.states.area_state import AreaState
 from telegram_app.bot.states.cancel_state import CancelState
@@ -41,9 +42,7 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-# Reduce verbosity for external libraries
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("telegram").setLevel(logging.WARNING)
+setup_logger()
 
 
 async def send_outage_notification(users_data: list) -> None:
