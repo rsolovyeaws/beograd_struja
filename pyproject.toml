@@ -30,3 +30,4 @@ select = ["ALL"]
 
 [tool.ruff]
 line-length = 120
+ignore = ["RUF001"]
