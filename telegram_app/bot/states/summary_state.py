@@ -1,21 +1,26 @@
-from telegram.ext import ContextTypes
+"""Handle the summary state of the bot."""
+
 from telegram import Update
+from telegram.ext import ContextTypes
+
 from telegram_app.bot.lang import PHRASES
+from telegram_app.bot.states.state import State
 from telegram_app.bot.utils import ACTION, send_message
 from telegram_app.sql.database import SessionLocal
-from telegram_app.bot.states.state import State 
-from telegram_app.sql.models import ScheduledAddress, User, Address
+from telegram_app.sql.models import Address, ScheduledAddress, User
+
 
 class SummaryState(State):
+    """Handle the summary state of the bot."""
+
     async def handle(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-        from telegram_app.bot.states.action_state import ActionState
-        print("Summary State!")
-        user_language = context.user_data['language']
+        """Handle the summary state of the bot."""
+        user_language = context.user_data["language"]
         phrases = PHRASES[user_language]
 
-        area = context.user_data.get('area')
-        street = context.user_data.get('street')
-        house = context.user_data.get('house')
+        area = context.user_data.get("area")
+        street = context.user_data.get("street")
+        house = context.user_data.get("house")
         summary_message = f"{area}, {street}, {house}"
 
         user_data = update.effective_user
@@ -43,19 +48,17 @@ class SummaryState(State):
                 street=street,
                 house_number=house,
                 confirmed_geolocation=False,
-                user_id=user.id
+                user_id=user.id,
             )
             db.add(address)
             db.commit()
 
-            scheduled_address = db.query(ScheduledAddress).filter_by(
-                municipality=area,
-                street=street,
-                house_range=house
-            ).first()
+            scheduled_address = (
+                db.query(ScheduledAddress).filter_by(municipality=area, street=street, house_range=house).first()
+            )
 
             if scheduled_address:
-                await send_message(update, phrases['address_scheduled_tomorrow'])
+                await send_message(update, phrases["address_scheduled_tomorrow"])
             else:
                 await send_message(update, summary_message)
         return ACTION
