@@ -3,5 +3,9 @@
     "[python]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "charliermarsh.ruff"
-    }
+    },
+    "cSpell.words": [
+        "autoflush",
+        "sessionmaker"
+    ]
 }
