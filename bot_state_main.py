@@ -15,10 +15,12 @@ from telegram.ext import (
     filters,
 )
 
+from telegram_app.address.geopify_validator import GeoapifyValidator
 from telegram_app.bot.logging_config import setup_logger
 from telegram_app.bot.states.action_state import ActionState
 from telegram_app.bot.states.area_state import AreaState
 from telegram_app.bot.states.cancel_state import CancelState
+from telegram_app.bot.states.confirm_address_state import ConfirmAddressState
 from telegram_app.bot.states.confirm_delete_state import ConfirmDeleteState
 from telegram_app.bot.states.house_state import HouseState
 from telegram_app.bot.states.language_state import LanguageState
@@ -28,7 +30,9 @@ from telegram_app.bot.states.street_state import StreetState
 from telegram_app.bot.utils import (
     ACTION,
     AREA,
+    CONFIRM_ADDRESS,
     DELETE,
+    GEOAPIFY_API_KEY,
     HOUSE,
     LANGUAGE,
     LIST,
@@ -77,17 +81,19 @@ async def send_outage_notification(users_data: list) -> None:
 def main() -> None:
     """Run the bot."""
     application = Application.builder().token(TOKEN).build()
+    address_validator = GeoapifyValidator(GEOAPIFY_API_KEY)
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", StartState().handle)],
         states={
             LANGUAGE: [CallbackQueryHandler(LanguageState().handle)],
             ACTION: [CallbackQueryHandler(ActionState().handle)],
-            AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, AreaState().handle)],
+            AREA: [MessageHandler(filters.TEXT & ~filters.COMMAND, AreaState(address_validator).handle)],
             STREET: [MessageHandler(filters.TEXT & ~filters.COMMAND, StreetState().handle)],
-            HOUSE: [MessageHandler(filters.TEXT & ~filters.COMMAND, HouseState().handle)],
+            HOUSE: [MessageHandler(filters.TEXT & ~filters.COMMAND, HouseState(address_validator).handle)],
             LIST: [MessageHandler(filters.TEXT & ~filters.COMMAND, ListAddressesState().handle)],
             DELETE: [CallbackQueryHandler(ConfirmDeleteState().handle)],
+            CONFIRM_ADDRESS: [CallbackQueryHandler(ConfirmAddressState().handle)],
         },
         fallbacks=[
             CommandHandler("start", StartState().handle),

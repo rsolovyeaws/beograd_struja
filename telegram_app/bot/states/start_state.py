@@ -7,7 +7,13 @@ from telegram.ext import ContextTypes
 
 from telegram_app.bot.lang import PHRASES
 from telegram_app.bot.states.state import State
-from telegram_app.bot.utils import ACTION, LANGUAGE, get_action_keyboard, get_language_keyboard, send_message
+from telegram_app.bot.utils import (
+    ACTION,
+    LANGUAGE,
+    get_action_keyboard,
+    get_language_keyboard,
+    send_message,
+)
 from telegram_app.sql.queries import create_user, get_user
 
 logger = logging.getLogger(__name__)
