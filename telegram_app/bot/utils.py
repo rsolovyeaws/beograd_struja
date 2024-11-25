@@ -16,11 +16,12 @@ load_dotenv()
 
 TOKEN: Final = os.getenv("TOKEN")
 BOT_USERNAME: Final = os.getenv("BOT_USERNAME")
+GEOAPIFY_API_KEY: Final = os.getenv("GEOAPIFY_API_KEY")
 
 logger = logging.getLogger(__name__)
 
 # STATES
-LANGUAGE, ACTION, AREA, STREET, HOUSE, SUMMARY, DELETE, SHOW, LIST = range(9)
+LANGUAGE, ACTION, AREA, STREET, HOUSE, SUMMARY, DELETE, SHOW, LIST, CONFIRM_ADDRESS = range(10)
 
 
 def validate_area(area: str) -> bool:
@@ -95,6 +96,15 @@ def get_address_keyboard(addresses: list, user_language: str) -> InlineKeyboardM
     return InlineKeyboardMarkup(keyboard)
 
 
+def get_confirm_keyboard(user_language: str) -> InlineKeyboardMarkup:
+    """Generate confirm keyboard based on the user's language."""
+    keyboard = [
+        [InlineKeyboardButton(PHRASES[user_language]["confirm"], callback_data="Confirm")],
+        [InlineKeyboardButton(PHRASES[user_language]["cancel"], callback_data="Cancel")],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
 async def send_outage_notification(users_data: list) -> None:
     """Send power outage notifications to multiple users via Telegram."""
     if not TOKEN:
@@ -118,3 +128,14 @@ async def send_outage_notification(users_data: list) -> None:
             await bot.send_message(chat_id=telegram_id, text=message_text.strip(), parse_mode="HTML")
         except Exception as e:  # noqa: BLE001
             logger.info("Failed to send message to user %s: %s", telegram_id, e)
+
+
+async def send_image(telegram_id: int, image_url: str, message_text: str) -> None:
+    """Send an image to the user."""
+    bot = Bot(token=TOKEN)
+    await bot.send_photo(
+        chat_id=telegram_id,
+        photo=image_url,
+        caption=message_text.strip(),
+        parse_mode="HTML",
+    )
