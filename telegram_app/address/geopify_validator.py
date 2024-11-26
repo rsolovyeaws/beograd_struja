@@ -33,7 +33,7 @@ class GeoapifyValidator(AddressValidator):
         url = f"https://api.geoapify.com/v1/geocode/autocomplete?text={encoded_address_text}&apiKey={self.token}"
         headers = CaseInsensitiveDict()
         headers["Accept"] = "application/json"
-        resp = requests.get(url, headers=headers)  # noqa: S113
+        resp = requests.get(url, headers=headers, timeout=30)
         data = json.loads(resp.text)
 
         # Extract lon and lat
