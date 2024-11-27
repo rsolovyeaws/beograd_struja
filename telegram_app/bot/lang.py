@@ -3,6 +3,7 @@
 PHRASES = {
     "Serbian": {
         "address_saved": "Адреса је сачувана.",
+        "hello": "Здраво",
         "welcome": "Добродошли у бот за струју у Београду!\nИзаберите језик\n",
         "choose_action": "Изаберите акцију",
         "confirm_address": "Да ли је ово ваша тачна адреса?",
@@ -26,9 +27,11 @@ PHRASES = {
         "was_deleted": "је обрисана.",
         "address_scheduled_tomorrow": "На овој адреси сутра ће бити искључена струја.",
         "no_addresses": "Није пронађена ниједна адреса за овог корисника.",
+        "scheduled_addresses": "Сутра ће бити искључење струје на следећим адресама:",
     },
     "English": {
         "address_saved": "Address saved.",
+        "hello": "Hello",
         "welcome": "Welcome to the Belgrade Electricity Bot!\nChoose your language\n",
         "choose_action": "Please choose an action",
         "confirm_address": "Is this your exact address?",
@@ -52,9 +55,11 @@ PHRASES = {
         "was_deleted": "was deleted.",
         "address_scheduled_tomorrow": "There will be a power outage at this address tomorrow.",
         "no_addresses": "No addresses found for this user.",
+        "scheduled_addresses": "There will be a power outage tomorrow at the following addresses:",
     },
     "Russian": {
         "address_saved": "Адрес сохранен.",
+        "hello": "Привет",
         "welcome": "Добро пожаловать в бота для электроэнергии Белграда!\nВыберите ваш язык\n",
         "choose_action": "Пожалуйста, выберите действие:",
         "confirm_address": "Это ваш точный адрес?",
@@ -78,6 +83,7 @@ PHRASES = {
         "was_deleted": "был удален.",
         "address_scheduled_tomorrow": "Завтра на этом адресе будет отключение электроэнергии.",
         "no_addresses": "Адреса не найдены для этого пользователя.",
+        "scheduled_addresses": "Завтра будет отключение электроэнергии по следующим адресам:",
     },
 }
 

@@ -1,8 +1,16 @@
 """Celery application configuration for the Telegram app."""
 
-from celery import Celery
+import os
+from typing import Final
 
-app = Celery("telegram", broker="redis://redis:6379/0")
+from celery import Celery
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path="telegram_app/.env")
+REDIS_HOST: Final = os.getenv("REDIS_HOST")
+REDIS_PORT: Final = os.getenv("REDIS_PORT")
+
+app = Celery("telegram", broker=f"redis://{REDIS_HOST}:{REDIS_PORT}/0")
 
 app.autodiscover_tasks(["telegram_app"])
 

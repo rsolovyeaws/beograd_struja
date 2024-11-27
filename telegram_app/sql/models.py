@@ -8,13 +8,15 @@ from sqlalchemy.sql import func
 Base = declarative_base()
 
 
-class User(Base):  # noqa: D101
+class User(Base):
+    """SQLAlchemy ORM model for the User. Stores telegram user data."""
+
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     telegram_id = Column(Integer, nullable=False)
-    first_name = Column(String(100), nullable=False)
-    last_name = Column(String(100), nullable=False)
+    first_name = Column(String(100), nullable=True)
+    last_name = Column(String(100), nullable=True)
     username = Column(String(100), nullable=False)
     is_bot = Column(Boolean, default=False)
     language_code = Column(String(4), nullable=False)
@@ -25,7 +27,9 @@ class User(Base):  # noqa: D101
     addresses = relationship("Address", back_populates="user")
 
 
-class Address(Base):  # noqa: D101
+class Address(Base):
+    """SQLAlchemy ORM model for the Address. Stores address data."""
+
     __tablename__ = "addresses"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -41,7 +45,9 @@ class Address(Base):  # noqa: D101
     user = relationship("User", back_populates="addresses")
 
 
-class ScheduledAddress(Base):  # noqa: D101
+class ScheduledAddress(Base):
+    """SQLAlchemy ORM model for the ScheduledAddress. Stores scheduled address data."""
+
     __tablename__ = "scheduled_addresses"
 
     id = Column(Integer, primary_key=True, index=True)

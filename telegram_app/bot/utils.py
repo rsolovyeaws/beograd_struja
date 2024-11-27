@@ -114,15 +114,14 @@ async def send_outage_notification(users_data: list) -> None:
 
     for user_data in users_data:
         telegram_id = user_data.get("telegram_id")
-        first_name = user_data.get("first_name")
-        last_name = user_data.get("last_name")
         addresses = user_data.get("addresses", [])
+        bot_language = user_data.get("bot_language")
 
-        message_text = f"Hello {first_name} {last_name},\n\n"
+        message_text = f"{PHRASES[bot_language]['scheduled_addresses']}\n"
         for address_info in addresses:
             address = address_info.get("address")
             time_range = address_info.get("time_range")
-            message_text += f"{address} is scheduled to have a power outage tomorrow from {time_range}.\n"
+            message_text += f"{address} - {time_range}.\n"
 
         try:
             await bot.send_message(chat_id=telegram_id, text=message_text.strip(), parse_mode="HTML")
