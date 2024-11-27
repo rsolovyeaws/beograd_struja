@@ -56,6 +56,12 @@ POSTGRES_PASSWORD=""
 POSTGRES_DB=""
 POSTGRES_HOST=""
 POSTGRES_PORT=""
+
+
+GEOAPIFY_API_KEY=""
+
+REDIS_HOST=""
+REDIS_PORT=""
 ```
 
 ## Run the following commands
