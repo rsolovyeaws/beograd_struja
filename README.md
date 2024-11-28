@@ -16,7 +16,7 @@ The goal of this project is to create notification system for planned power outa
 ![image](https://github.com/user-attachments/assets/e425971b-c469-4b0c-b718-134914bbeb9e)
 ### 3. User signups for the address to be monitored
 ![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975
-### 4. System checks it GEOAPIFY API and asks user to confirm address on the map.
+### 4. System confirms address through GEOAPIFY API and asks user to confirm address on the map.
 ![image](https://github.com/user-attachments/assets/14b31f90-2fdf-4a14-8346-9043b5301a57)
 ### 4. Backend saves users address to the database
 ### 5. Backend matches user's address with the address planned for the power outage in database 
