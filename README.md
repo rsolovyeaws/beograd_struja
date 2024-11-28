@@ -11,11 +11,13 @@ The goal of this project is to create notification system for planned power outa
 ### 0. Backend scrapes data from the web site (next day power outage) (https://elektrodistribucija.rs/planirana-iskljucenja-beograd/Dan_1_Iskljucenja.htm)
 ![image](https://github.com/user-attachments/assets/82bb9834-ba23-456f-bc72-7397e155966f)
 ### 1. User chooses the language for interaction with bot
-![image](https://github.com/user-attachments/assets/091c8d6a-1a08-43fe-bbd1-7514d7982e6e) 
+![image](https://github.com/user-attachments/assets/b530ea5b-b4d6-4ca9-b3ae-fee614136577)
 ### 2. User chooses to "Add address" that user wants to monitor
 ![image](https://github.com/user-attachments/assets/e425971b-c469-4b0c-b718-134914bbeb9e)
 ### 3. User signups for the address to be monitored
-![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975)
+![image](https://github.com/user-attachments/assets/5d1cd58b-7874-495d-9f01-05e6c6373975
+### 4. System checks it GEOAPIFY API and asks user to confirm address on the map.
+![image](https://github.com/user-attachments/assets/14b31f90-2fdf-4a14-8346-9043b5301a57)
 ### 4. Backend saves users address to the database
 ### 5. Backend matches user's address with the address planned for the power outage in database 
 ### 6. User gets notified (address is provided for demonstration purpose)
@@ -33,9 +35,8 @@ The goal of this project is to create notification system for planned power outa
 
 # Future plans for the project
 ## High priority
-- Add address verifictaion for user's input (e.g. user enters "Zimun" -> System asks: "Did you mean 'Zemun' etc."
+- Add address verifictaion for user's input (e.g. user enters "Zimun" -> System asks: "Did you mean 'Zemun' etc.")
 - Notify users about planned power outages in their area 0/24/48/72/96 hours before the power outage
-- Expand notification system to other cities in Serbia (might be impossible... sinse Kikinda has nothing to parse)
 
 ## Moderate Priority
 - Provide users with statistics that shows how many times the power outage happened in their area/address/overall (need to modify db to store history)
