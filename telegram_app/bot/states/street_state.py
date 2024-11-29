@@ -20,6 +20,15 @@ class StreetState(State):
             await send_message(update, phrases["enter_street"])
             return STREET
 
-        context.user_data["street"] = update.message.text.upper()
+        context.user_data["street"] = self._remove_house_number_from_street_input(update.message.text)
+
         await send_message(update, phrases["enter_house"])
         return HOUSE
+
+    def _remove_house_number_from_street_input(self, street_input: str) -> str:
+        """Remove the house number from the street input."""
+        street_input_list = street_input.split(" ")
+        if street_input_list[-1].isnumeric():
+            street_input_list.pop()
+            return " ".join(street_input_list).upper()
+        return street_input.upper()
