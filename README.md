@@ -5,7 +5,8 @@ The goal of this project is to create notification system for planned power outa
 1. User has to interact with the Bot via telegram(https://telegram.org/)
 2. User has to signup for the telegram bot created by developer ![image](https://github.com/user-attachments/assets/fc7ff15e-3e71-4bda-be1c-2d945742af37)
 
-
+# Bot name
+@belgrade_power_outage_bot
 
 # Sample scenario:
 ### 0. Backend scrapes data from the web site (next day power outage) (https://elektrodistribucija.rs/planirana-iskljucenja-beograd/Dan_1_Iskljucenja.htm)
